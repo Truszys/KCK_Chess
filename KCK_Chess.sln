@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34031.279
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logic", "KCK_Console\Logic.csproj", "{FE650CAD-C6F1-4659-BFE9-3CC45D6ECCBE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UIConsole", "UIConsole\UIConsole.csproj", "{D9D1D15A-E5AE-47D9-AF4C-09A3BA17B4F7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UIApp", "UIApp\UIApp.csproj", "{79992E22-5C61-439C-8B96-0DB4E58679E2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FE650CAD-C6F1-4659-BFE9-3CC45D6ECCBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE650CAD-C6F1-4659-BFE9-3CC45D6ECCBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE650CAD-C6F1-4659-BFE9-3CC45D6ECCBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE650CAD-C6F1-4659-BFE9-3CC45D6ECCBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9D1D15A-E5AE-47D9-AF4C-09A3BA17B4F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9D1D15A-E5AE-47D9-AF4C-09A3BA17B4F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9D1D15A-E5AE-47D9-AF4C-09A3BA17B4F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9D1D15A-E5AE-47D9-AF4C-09A3BA17B4F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79992E22-5C61-439C-8B96-0DB4E58679E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79992E22-5C61-439C-8B96-0DB4E58679E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79992E22-5C61-439C-8B96-0DB4E58679E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79992E22-5C61-439C-8B96-0DB4E58679E2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {88E8A3F6-2F7C-466E-A8D3-54828D5BC1B3}
+	EndGlobalSection
+EndGlobal
