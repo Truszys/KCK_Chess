@@ -10,50 +10,157 @@ class Program
         MaximizeWindow();
         Console.BackgroundColor = ConsoleColor.Black;
         Console.ForegroundColor = ConsoleColor.White;
-        while (true)
+        Console.Clear();
+        Console.CursorVisible = false;
+        MainMenu();
+    }
+    public static void MainMenu()
+    {
+        var settings = new Settings();
+        var selectedOption = 0;
+        List<String> options = new()
         {
-            var choice = MainMenu();
-            switch (choice)
+            "Start new game",
+            "Start game from notation",
+            "Game settings"
+        };
+        while(true)
+        {
+            var menu = new Menu("Chess game", options, selectedOption);
+            selectedOption = menu.HandleMenu();
+            switch (selectedOption)
             {
                 case 0:
-                    return;
+                    Game(new GameState(Board.CreateNew(), Player.White, settings));
+                    break;
                 case 1:
-                    GameState gameState = new(Board.CreateNew(), Player.White, new Settings());
-                    Game(gameState);
                     break;
                 case 2:
-                    throw new NotImplementedException();
-                    break;
-                case 3:
-                    throw new NotImplementedException();
+                    settings = Settings(settings);
                     break;
                 default:
-                    break;
+                    return;
             }
         }
     }
-    public static int MainMenu()
+    public static Settings Settings(Settings settings)
     {
-        Console.Clear();
-        int choice;
-        do
+        List<String> options = new()
         {
-            Console.WriteLine("Main menu:");
-            Console.WriteLine("1) Start new game");
-            Console.WriteLine("2) Start game from notation");
-            Console.WriteLine("3) Game settings");
-            Console.WriteLine("0) Quit");
-        } while (!int.TryParse(Console.ReadKey(intercept: true).KeyChar.ToString(), out choice) || choice < 0 || choice > 3);
-        return choice;
+            "Controls",
+            "Time control",
+        };
+        while(true)
+        {
+            var menu = new Menu("Settings", options);
+            switch (menu.HandleMenu())
+            {
+                case 0:
+                    settings.control = SettingsControl(settings.control);
+                    break;
+                case 1:
+                    settings.time = SettingsTime(settings.time);
+                    break;
+                default:
+                    return settings;
+            }
+        }
+
+    }
+    public static CONTROL SettingsControl(CONTROL oldControl)
+    {
+        List<String> options = new()
+        {
+            "Notation",
+            "Move input",
+            "Board movement",
+        };
+        var menu = new Menu("Controls", options, (int) oldControl);
+        switch (menu.HandleMenu())
+        {
+            case 0:
+                return CONTROL.NOTATION;
+            case 1:
+                return CONTROL.TEXT;
+            case 2:
+                return CONTROL.BOARD;
+            default:
+                return oldControl;
+        }
+    }
+    public static TIME SettingsTime(TIME oldTime)
+    {
+        List<String> options = new()
+        {
+            "1",
+            "1 + 5",
+            "5",
+            "5 + 5",
+            "10",
+            "10 + 10",
+            "30",
+            "30 + 30",
+        };
+        var start = 0;
+        switch (oldTime)
+        {
+            case TIME.ONE:
+                start = 0;
+                break;
+            case TIME.ONE_PLUS:
+                start = 1;
+                break;
+            case TIME.FIVE:
+                start = 2;
+                break;
+            case TIME.FIVE_PLUS:
+                start = 3;
+                break;
+            case TIME.TEN:
+                start = 4;
+                break;
+            case TIME.TEN_PLUS:
+                start = 5;
+                break;
+            case TIME.THIRTY:
+                start = 6;
+                break;
+            case TIME.THIRTY_PLUS:
+                start = 7;
+                break;
+        }
+        var menu = new Menu("Time control", options, start);
+        switch (menu.HandleMenu())
+        {
+            case 0:
+                return TIME.ONE;
+            case 1:
+                return TIME.ONE_PLUS;
+            case 2:
+                return TIME.FIVE;
+            case 3:
+                return TIME.FIVE_PLUS;
+            case 4:
+                return TIME.TEN;
+            case 5:
+                return TIME.TEN_PLUS;
+            case 6:
+                return TIME.THIRTY_PLUS;
+            case 7:
+                return TIME.THIRTY_PLUS;
+            default:
+                return oldTime;
+        }
     }
 
     public static void Game(GameState state)
     {
+        Console.ResetColor();
         WriteBoard();
         UpdateScoreBoard(state);
         FillBoard(state);
         state.StartTimer();
-        while(state.IsGameOver())
+        while(!state.IsGameOver())
         {
             HideCheck(state.Board);
             if (state.Board.IsInCheck(state.CurrentPlayer))

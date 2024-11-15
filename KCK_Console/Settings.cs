@@ -8,20 +8,20 @@ namespace Logic
 {
     public enum CONTROL
     {
-        NOTATION,
-        TEXT,
-        BOARD
+        NOTATION = 0,
+        TEXT = 1,
+        BOARD = 2,
     }
     public enum TIME
     {
-        ONE_PLUS = 60 + 5,
         ONE = 60,
-        FIVE_PLUS = 5 * 60 + 5,
+        ONE_PLUS = 60 + 5,
         FIVE = 5 * 60,
-        TEN_PLUS = 10 * 60 + 10,
+        FIVE_PLUS = 5 * 60 + 5,
         TEN = 10 * 60,
+        TEN_PLUS = 10 * 60 + 10,
+        THIRTY = 30 * 60,
         THIRTY_PLUS = 30 * 60 + 30,
-        THIRTY = 30 * 60
     }
     public class Settings
     {
