@@ -15,10 +15,5 @@
             board[From] = null;
             piece.wasMoved = true;
         }
-        public override string GetNotation(Board board)
-        {
-            var piece = board[From];
-            return (piece.Type == PieceType.Pawn ? "" : piece.Mark) + To.GetPositionNotation();
-        }
     }
 }

@@ -26,6 +26,6 @@ namespace Logic
     public class Settings
     {
         public CONTROL control { get; set; } = CONTROL.BOARD;
-        public TIME time { get; set; } = TIME.ONE;
+        public TIME time { get; set; } = TIME.FIVE_PLUS;
     }
 }

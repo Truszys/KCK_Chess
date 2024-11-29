@@ -4,6 +4,7 @@ namespace Logic
 {
     public class GameState
     {
+        public List<Move> Moves { get; } = new List<Move>();
         public Board Board { get; }
         public Player CurrentPlayer { get; private set; }
         public Result Result { get; private set; } = null;
@@ -46,6 +47,7 @@ namespace Logic
                     Board.Score += piece.value;
                 }
             }
+            Moves.Add(move);
             move.Execute(Board);
             SwitchTimer();
             CurrentPlayer = PlayerExtentions.getOponent(CurrentPlayer);

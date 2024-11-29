@@ -1,6 +1,7 @@
 ﻿using Logic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 
 namespace UIConsole;
 class Program
@@ -160,7 +161,7 @@ class Program
         UpdateScoreBoard(state);
         FillBoard(state);
         state.StartTimer();
-        while(!state.IsGameOver())
+        while (!state.IsGameOver())
         {
             HideCheck(state.Board);
             if (state.Board.IsInCheck(state.CurrentPlayer))
@@ -170,6 +171,7 @@ class Program
             var move = AskForMove(state);
             if (move != null)
             {
+                MarkMove(state, move);
                 MakeMove(state, move);
             }
             UpdateScoreBoard(state);
@@ -190,6 +192,14 @@ class Program
             }
         }
     }
+    public static void MarkMove(GameState state, Move move)
+    {
+        Console.BackgroundColor = ConsoleColor.Black;
+        Console.ForegroundColor = ConsoleColor.White;
+        Console.SetCursorPosition(100 + (state.Board[move.From].Color == Player.Black ? 10 : 0), 4 + state.Moves.Count / 2);
+        state.Moves.Add(move);
+        Console.Write(move.GetNotation(state.Board));
+    }
     private static Move? AskForMove(GameState state)
     {
         Console.BackgroundColor = ConsoleColor.Black;
@@ -201,6 +211,7 @@ class Program
                 char temp = '\0';
                 Position from;
                 Position to;
+                string s = "";
                 IEnumerable<Move> posibleMoves;
                 while(!state.IsGameOver())
                 {
@@ -217,6 +228,7 @@ class Program
                         if (temp >= 'a' && temp <= 'h')
                         {
                             col = temp - 'a';
+                            s += temp;
                             break;
                         }
                         if (temp == 27 || temp == 8)
@@ -356,7 +368,77 @@ class Program
                 }
                 break;
             case CONTROL.NOTATION:
-                Console.WriteLine("Enter your move: ");
+                while (!state.IsGameOver())
+                {
+                    var notation = "";
+                    Console.SetCursorPosition(0, 41);
+                    Console.WriteLine("Enter your move notation:                             ");
+                    while (!state.IsGameOver())
+                    {
+                        UpdateScoreBoard(state);
+                        Console.SetCursorPosition(26 + notation.Length, 41);
+                        temp = Console.ReadKey(true).KeyChar;
+                        HideError();
+                        if (Regex.Match(temp.ToString(), @"[a-hBKQRNx\+#1-8]").Success)
+                        {
+                            var pm = state.AllLegalMovesFor(state.CurrentPlayer).Where(m => m.GetNotation(state.Board).StartsWith(notation + temp));
+                            if (pm.Any())
+                            {
+                                Console.SetCursorPosition(26 + notation.Length, 41);
+                                Console.Write(temp);
+                                notation += temp;
+                                RemovePosibleMoves();
+                                ShowPosibleMoves(state.AllLegalMovesFor(state.CurrentPlayer).Where(m => m.GetNotation(state.Board).StartsWith(notation)));
+                            }
+                            else
+                            {
+                                ShowError($"No posible moves with this notation({notation + temp})");
+                            }
+                        }
+                        else if (temp == 8)
+                        {
+                            if (notation.Length > 0)
+                            {
+                                notation = notation[..^1];
+                                Console.SetCursorPosition(26 + notation.Length, 41);
+                                Console.Write(" ");
+                                Console.SetCursorPosition(26 + notation.Length, 41);
+                                RemovePosibleMoves();
+                                if (notation.Length > 0)
+                                {
+                                    ShowPosibleMoves(state.AllLegalMovesFor(state.CurrentPlayer).Where(m => m.GetNotation(state.Board).StartsWith(notation)));
+                                }
+                            }
+                        }
+                        else if (temp == 13)
+                        {
+                            var posMov = state.AllLegalMovesFor(state.CurrentPlayer).Where(m => m.GetNotation(state.Board).StartsWith(notation));
+                            if (posMov.Count() == 1)
+                            {
+                                RemovePosibleMoves();
+                                return posMov.First();
+                            }
+                            else
+                            {
+                                ShowError("More than one move posible");
+                            }
+                        }
+                    }
+                    //if (state.IsGameOver())
+                    //{
+                    //    break;
+                    //}
+                    //HideError();
+                    //var move = Move.GetMoveFromNotation(notation, state.CurrentPlayer, state.Board);
+                    //if (move == null || !move.IsLegal(state.Board))
+                    //{
+                    //    ShowError("Wrong move!");
+                    //}
+                    //else
+                    //{
+                    //    return move;
+                    //}
+                }
                 break;
             case CONTROL.BOARD:
                 Console.CursorVisible = false;
@@ -497,9 +579,9 @@ class Program
     }
     private static void MakeMove(GameState state, Move move)
     {
-        ClearTile(move.From);
-        PutPiece(state.Board[move.From], move.To);
         state.MakeMove(move);
+        ClearTile(move.From);
+        PutPiece(state.Board[move.To], move.To);
     }
     private static void ShowCheck(Board board)
     {
@@ -559,20 +641,20 @@ class Program
     private static void ShowPosibleMoves(IEnumerable<Move> moves)
     {
         var oldBG = Console.BackgroundColor;
-        Console.BackgroundColor = ConsoleColor.Green;
-        var coords = GetSquereCoordinates(moves.First().From.Row, moves.First().From.Column);
-        for (int i = -4; i <= 4; i += 8)
-        {
-            for (int j = -1; j <= 1; j += 2)
-            {
-                Console.SetCursorPosition(coords.Item2 + i, coords.Item1 + j);
-                Console.Write(" ");
-            }
-        }
-        Console.BackgroundColor = ConsoleColor.Yellow;
         foreach (var move in moves)
         {
-            coords = GetSquereCoordinates(move.To.Row, move.To.Column);
+            Console.BackgroundColor = ConsoleColor.Green;
+            var coords = GetSquereCoordinates(moves.First().From);
+            for (int i = -4; i <= 4; i += 8)
+            {
+                for (int j = -1; j <= 1; j += 2)
+                {
+                    Console.SetCursorPosition(coords.Item2 + i, coords.Item1 + j);
+                    Console.Write(" ");
+                }
+            }
+            Console.BackgroundColor = ConsoleColor.Yellow;
+            coords = GetSquereCoordinates(move.To);
             for(int i = -4; i <= 4; i += 8)
             {
                 for (int j = -1; j <= 1; j += 2)
@@ -592,7 +674,7 @@ class Program
             for (int j = 0; j < 8; j++)
             {
                 var position = new Position(i, j);
-                var coords = GetSquereCoordinates(i, j);
+                var coords = GetSquereCoordinates(position);
                 for (int k = -4; k <= 4; k += 8)
                 {
                     for (int l = -1; l <= 1; l += 2)
@@ -617,7 +699,7 @@ class Program
         RemoveCursor();
         var oldBG = Console.BackgroundColor;
         Console.BackgroundColor = ConsoleColor.Red;
-        var coords = GetSquereCoordinates(position.Row, position.Column);
+        var coords = GetSquereCoordinates(position);
         Console.SetCursorPosition(coords.Item2 - 1, coords.Item1 - 1);
         Console.Write("   ");
         Console.SetCursorPosition(coords.Item2 - 4, coords.Item1);
@@ -636,7 +718,7 @@ class Program
             for (int j = 0; j < 8; j++)
             {
                 var position = new Position(i, j);
-                var coords = GetSquereCoordinates(i, j);
+                var coords = GetSquereCoordinates(position);
                 for (int k = -4; k <= 4; k += 8)
                 {
                     for (int l = -1; l <= 1; l += 2)
@@ -826,7 +908,7 @@ class Program
         var oldFG = Console.ForegroundColor;
         var oldCursorLeft = Console.CursorLeft;
         var oldCursorTop = Console.CursorTop;
-        var coords = GetSquereCoordinates(position.Row, position.Column);
+        var coords = GetSquereCoordinates(position);
         Console.SetCursorPosition(coords.Item2 - 1, coords.Item1);
         Console.BackgroundColor = piece.Color == Player.Black ? ConsoleColor.Black : ConsoleColor.White;
         Console.ForegroundColor = piece.Color == Player.Black ? ConsoleColor.White : ConsoleColor.Black;

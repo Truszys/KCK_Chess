@@ -94,6 +94,14 @@ namespace Logic
         {
             return PiecePositions().Where(pos => this[pos].Type == PieceType.King);
         }
+        public IEnumerable<Position> GetPiecesOfType(Player color, PieceType type, Position? except = null)
+        {
+            if (except == null)
+            {
+                return PiecePositionFor(color).Where(pos => this[pos].Type == type);
+            }
+            return PiecePositionFor(color).Where(pos => pos != except && this[pos].Type == type);
+        }
         public Board Copy()
         {
             var copy = new Board();

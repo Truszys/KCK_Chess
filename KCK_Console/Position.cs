@@ -19,13 +19,25 @@
                 return Player.Black;
             return Player.White;
         }
-        public static Position GetPositionFromNotation(string str)
+        public static Position? GetPositionFromNotation(string str)
         {
-            return new Position(str[0] - 'a', int.Parse(str[1] + "") - 1);
+            try
+            {
+                int col = str[0] - 'a';
+                int row = str[1] - '1';
+                var pos = new Position(row, col);
+                if (Board.IsInside(pos))
+                    return pos;
+                return null;
+            }
+            catch
+            {
+                return null;
+            }
         }
-        public string GetPositionNotation()
+        public string GetNotation()
         {
-            return ((char)('a' + Row)).ToString() + (char)('1' + Column);
+            return ((char)('a' + Column)).ToString() + (char)('1' + Row);
         }
 
         public override bool Equals(object? obj)
