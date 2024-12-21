@@ -424,20 +424,6 @@ class Program
                             }
                         }
                     }
-                    //if (state.IsGameOver())
-                    //{
-                    //    break;
-                    //}
-                    //HideError();
-                    //var move = Move.GetMoveFromNotation(notation, state.CurrentPlayer, state.Board);
-                    //if (move == null || !move.IsLegal(state.Board))
-                    //{
-                    //    ShowError("Wrong move!");
-                    //}
-                    //else
-                    //{
-                    //    return move;
-                    //}
                 }
                 break;
             case CONTROL.BOARD:

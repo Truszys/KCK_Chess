@@ -7,6 +7,14 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-
+        <WrapPanel />
+        <TextBlock HorizontalAlignment="Center" Margin="0,50,0,0" TextWrapping="Wrap" Text="KCK Chess" VerticalAlignment="Top" FontSize="24" FontWeight="Bold"/>
+        <Grid>
+            <Button x:Name="btn_start_game" Content="Start new game" HorizontalAlignment="Center" Margin="0,145,0,0" VerticalAlignment="Top" Click="btn_start_game_Click" Background="{x:Null}" BorderBrush="{x:Null}"/>
+            <Button x:Name="btn_start_game_notation" Content="Start game from notation" HorizontalAlignment="Center" Margin="0,200,0,0" VerticalAlignment="Top" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"/>
+            <Button x:Name="btn_settings" Content="Settings" HorizontalAlignment="Center" Margin="0,250,0,0" VerticalAlignment="Top" BorderBrush="{x:Null}" Background="{x:Null}"/>
+            <Button x:Name="btn_quit" Content="Quit" HorizontalAlignment="Center" Margin="0,300,0,0" VerticalAlignment="Top" Click="btn_quit_Click" Background="{x:Null}" BorderBrush="{x:Null}"/>
+            
+        </Grid>
     </Grid>
 </Window>

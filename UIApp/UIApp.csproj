@@ -3,12 +3,81 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net8.0-windows7.0</TargetFramework>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
     <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\board-black.jpg" />
+    <None Remove="Assets\board-brown.jpg" />
+    <None Remove="Assets\board-wood.jpg" />
+    <None Remove="Assets\modern\all-b.png" />
+    <None Remove="Assets\modern\all-w.png" />
+    <None Remove="Assets\modern\bishop-b.png" />
+    <None Remove="Assets\modern\bishop-w.png" />
+    <None Remove="Assets\modern\king-b.png" />
+    <None Remove="Assets\modern\king-w.png" />
+    <None Remove="Assets\modern\knight-b.png" />
+    <None Remove="Assets\modern\knight-w.png" />
+    <None Remove="Assets\modern\pawn-b.png" />
+    <None Remove="Assets\modern\pawn-w.png" />
+    <None Remove="Assets\modern\queen-b.png" />
+    <None Remove="Assets\modern\queen-w.png" />
+    <None Remove="Assets\modern\rook-b.png" />
+    <None Remove="Assets\modern\rook-w.png" />
+    <None Remove="Assets\simple\all-b.png" />
+    <None Remove="Assets\simple\all-w.png" />
+    <None Remove="Assets\simple\bishop-b.png" />
+    <None Remove="Assets\simple\bishop-w.png" />
+    <None Remove="Assets\simple\king-b.png" />
+    <None Remove="Assets\simple\king-w.png" />
+    <None Remove="Assets\simple\knight-b.png" />
+    <None Remove="Assets\simple\knight-w.png" />
+    <None Remove="Assets\simple\pawn-b.png" />
+    <None Remove="Assets\simple\pawn-w.png" />
+    <None Remove="Assets\simple\queen-b.png" />
+    <None Remove="Assets\simple\queen-w.png" />
+    <None Remove="Assets\simple\rook-b.png" />
+    <None Remove="Assets\simple\rook-w.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\KCK_Console\Logic.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\boards\black.jpg" />
+    <Resource Include="Assets\boards\brown.jpg" />
+    <Resource Include="Assets\boards\wood.jpg" />
+    <Resource Include="Assets\modern\all-b.png" />
+    <Resource Include="Assets\modern\all-w.png" />
+    <Resource Include="Assets\modern\bishop-b.png" />
+    <Resource Include="Assets\modern\bishop-w.png" />
+    <Resource Include="Assets\modern\king-b.png" />
+    <Resource Include="Assets\modern\king-w.png" />
+    <Resource Include="Assets\modern\knight-b.png" />
+    <Resource Include="Assets\modern\knight-w.png" />
+    <Resource Include="Assets\modern\pawn-b.png" />
+    <Resource Include="Assets\modern\pawn-w.png" />
+    <Resource Include="Assets\modern\queen-b.png" />
+    <Resource Include="Assets\modern\queen-w.png" />
+    <Resource Include="Assets\modern\rook-b.png" />
+    <Resource Include="Assets\modern\rook-w.png" />
+    <Resource Include="Assets\simple\all-b.png" />
+    <Resource Include="Assets\simple\all-w.png" />
+    <Resource Include="Assets\simple\bishop-b.png" />
+    <Resource Include="Assets\simple\bishop-w.png" />
+    <Resource Include="Assets\simple\king-b.png" />
+    <Resource Include="Assets\simple\king-w.png" />
+    <Resource Include="Assets\simple\knight-b.png" />
+    <Resource Include="Assets\simple\knight-w.png" />
+    <Resource Include="Assets\simple\pawn-b.png" />
+    <Resource Include="Assets\simple\pawn-w.png" />
+    <Resource Include="Assets\simple\queen-b.png" />
+    <Resource Include="Assets\simple\queen-w.png" />
+    <Resource Include="Assets\simple\rook-b.png" />
+    <Resource Include="Assets\simple\rook-w.png" />
   </ItemGroup>
 
 </Project>

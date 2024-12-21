@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Logic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,28 @@ namespace UIApp
     /// </summary>
     public partial class MainWindow : Window
     {
+        private Settings settings = new();
+        private FrontSettings frontSettings = new();
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void btn_start_game_Click(object sender, RoutedEventArgs e)
+        {
+            Hide();
+            var window = new game(Board.CreateNew(), settings, frontSettings);
+            window.Show();
+            window.Closed += gameClosed;
+        }
+
+        private void btn_quit_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+        private void gameClosed(object sender, EventArgs e)
+        {
+            Show();
         }
     }
 }
